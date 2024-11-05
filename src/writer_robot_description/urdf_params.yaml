@@ -1,0 +1,2 @@
+urdf_file: $(find robot_description)/urdf/robot.urdf
+reload_interval: 0.5  # reload URDF every 1 second

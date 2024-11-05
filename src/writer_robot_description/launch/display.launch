@@ -1,0 +1,37 @@
+<launch>
+
+
+    <arg name="model" default="$(find writer_robot_description)/urdf/writer.urdf" />
+    <arg name="gui" default="true" />
+    <arg name="rvizconfig" default="$(find writer_robot_description)/rviz/writer.rviz" />
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+  
+  
+    <!-- <param name="robot_description" command="$(find xacro)/xacro $(arg model)" /> -->
+  
+  
+    <node
+      name="joint_state_publisher_gui"
+      pkg="joint_state_publisher_gui"
+      type="joint_state_publisher_gui" />
+  
+    <!-- ini yang bikin tantrum, harus pilih salah satu -->
+    <!-- <node
+      name="joint_state_publisher"
+      pkg="joint_state_publisher"
+      type="joint_state_publisher" /> -->
+  
+  
+    <node
+      name="robot_state_publisher"
+      pkg="robot_state_publisher"
+      type="robot_state_publisher" />
+  
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true">
+      <rosparam file="$(find writer_robot_description)/urdf_params.yaml" command="load" />
+    </node>
+    <!-- <node pkg="urdf_loader" type="urdf_loader" name="urdf_loader_node">
+      <remap from="urdf_file" to="$(find writer_robot_description)/urdf/writer.urdf"/>
+    </node> -->
+  
+  </launch>
